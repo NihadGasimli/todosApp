@@ -67,7 +67,6 @@ allBtn.onclick = function () {
 function createNewTask(text) {
     counter++;
     itemLeftCounter++;
-    console.log(counter)
     const task = {
         text: text,
         completed: false
@@ -98,14 +97,12 @@ function completeActivate() {
             if (tasks[i].completed === false) {
                 textOfTaskAll[i].style.textDecoration = "line-through"
                 radioBtnAll[i].innerHTML = "✓"
-                console.log(tasks[i].completed)
                 tasks[i].completed = true;
                 itemLeftCounter--;
             }
             else {
                 textOfTaskAll[i].style.textDecoration = "none"
                 radioBtnAll[i].innerHTML = ""
-                console.log(tasks[i].completed)
                 tasks[i].completed = false;
                 itemLeftCounter++;
             }
