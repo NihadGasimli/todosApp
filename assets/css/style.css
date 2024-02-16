@@ -23,12 +23,36 @@ body {
   background-color: cadetblue;
 }
 
+#arrow {
+  position: absolute;
+  z-index: 999;
+  left: 0px;
+  font-size: 32px;
+  height: 100%;
+  box-sizing: border-box;
+  padding-top: 14px;
+  width: 40px;
+  text-align: center;
+  color: gray;
+  transition: 0.2s;
+  cursor: pointer;
+  display: none;
+  padding-left: 25px;
+}
+
+#arrow:hover {
+  font-size: 40px;
+  transition: 0.2s;
+}
+
+
 #container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 
 #inputDiv {
   display: flex;
@@ -44,10 +68,10 @@ body {
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-size: 30px;
   font-style: italic;
-  border-radius: 10px;
   border: 1px solid gray;
   box-sizing: border-box;
   position: relative;
+  padding-left: 65px;
 }
 
 #addBtn {
@@ -60,7 +84,7 @@ body {
   display: none;
   font-weight: bold;
   position: absolute;
-  left: 630px;  
+  left: 630px;
 }
 
 .button-85 {
@@ -79,18 +103,16 @@ body {
 
 .button-85:before {
   content: "";
-  background: linear-gradient(
-    45deg,
-    #ff0000,
-    #ff7300,
-    #fffb00,
-    #48ff00,
-    #00ffd5,
-    #002bff,
-    #7a00ff,
-    #ff00c8,
-    #ff0000
-  );
+  background: linear-gradient(45deg,
+      #ff0000,
+      #ff7300,
+      #fffb00,
+      #48ff00,
+      #00ffd5,
+      #002bff,
+      #7a00ff,
+      #ff00c8,
+      #ff0000);
   position: absolute;
   top: -2px;
   left: -2px;
@@ -109,9 +131,11 @@ body {
   0% {
     background-position: 0 0;
   }
+
   50% {
     background-position: 400% 0;
   }
+
   100% {
     background-position: 0 0;
   }
@@ -139,6 +163,7 @@ body {
   padding-left: 20px;
   box-sizing: border-box;
   background-color: #fff;
+
 }
 
 .radioBtn {
@@ -177,7 +202,7 @@ body {
   align-self: center;
 }
 
-#infoDiv{
+#infoDiv {
   display: none;
   background-color: #fff;
   height: 30px;
@@ -187,22 +212,38 @@ body {
   box-sizing: border-box;
   border: 1px solid gray;
 }
-#infoDiv h1{
+
+#infoDiv h1 {
   font-size: 18px;
 }
 
-#buttons{
+#buttons {
   display: flex;
   gap: 20px;
 }
 
-#buttons p:hover{
+#buttons p:hover {
   border: 1px solid red;
   cursor: pointer;
 }
 
 
-#clearCompletedBtn:hover{
+#clearCompletedBtn:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+@media(max-width:780px) {
+  #input {
+    width: 100%;
+  }
+
+  .taskDiv {
+    width: 100%;
+  }
+
+  #infoDiv {
+    height: auto;
+    flex-direction: column;
+  }
 }

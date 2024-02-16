@@ -8,8 +8,10 @@ const clearCompletedBtn = document.querySelector("#clearCompletedBtn");
 var itemLeft = document.querySelector("#itemLeft")
 var tasksDiv = document.querySelector("#tasksDiv");
 var container = document.querySelector("#container");
+var arrow = document.querySelector("#arrow")
 var counter = 0;
 var itemLeftCounter = 0;
+var arrowClick = false;
 
 setInterval(function () {
     itemLeft.innerHTML = `${itemLeftCounter} items left!`
@@ -19,6 +21,7 @@ setInterval(function () {
 function activatingAddBtn() {
     if (input.value.trim() !== "") {
         addBtn.style.display = "block"
+
     }
     else {
         addBtn.style.display = "none"
@@ -63,8 +66,36 @@ allBtn.onclick = function () {
     showAllTasks()
 }
 
+arrow.addEventListener("click", function () {
+    if (arrowClick === false) {
+        var taskDivAll = document.querySelectorAll(".taskDiv");
+        var radioBtnAll = document.querySelectorAll(".radioBtn");
+        var textOfTaskAll = document.querySelectorAll(".textOfTask");
+        for (let i in taskDivAll) {
+            arrowClick = true;
+            tasks[i].completed = true;
+            textOfTaskAll[i].style.textDecoration = "line-through";
+            radioBtnAll[i].innerHTML = "✓";
+            itemLeftCounter = 0;
+        }
+    }
+    else if (arrowClick === true) {
+        var taskDivAll = document.querySelectorAll(".taskDiv");
+        var radioBtnAll = document.querySelectorAll(".radioBtn");
+        var textOfTaskAll = document.querySelectorAll(".textOfTask");
+        for (let i in taskDivAll) {
+            arrowClick = false;
+            tasks[i].completed = false;
+            textOfTaskAll[i].style.textDecoration = "none";
+            radioBtnAll[i].innerHTML = "";
+            itemLeftCounter++;
+        }
+    }
+})
+
 
 function createNewTask(text) {
+    arrow.style.display = "block"
     counter++;
     itemLeftCounter++;
     const task = {
@@ -98,7 +129,9 @@ function completeActivate() {
                 textOfTaskAll[i].style.textDecoration = "line-through"
                 radioBtnAll[i].innerHTML = "✓"
                 tasks[i].completed = true;
-                itemLeftCounter--;
+                if (itemLeftCounter > 0) {
+                    itemLeftCounter--;
+                }
             }
             else {
                 textOfTaskAll[i].style.textDecoration = "none"
@@ -119,9 +152,14 @@ function removeTask() {
             xBtnAll[i].onclick = function () {
                 tasks.splice(i, 1);
                 tasksDiv.removeChild(taskDivAll[i])
-                counter--;
-                itemLeftCounter--;
-
+                if (counter > 0 && itemLeftCounter > 0) {
+                    counter--;
+                    itemLeftCounter--;
+                }
+                if (itemLeftCounter === 0) {
+                    document.querySelector("#infoDiv").style.display = "none"
+                    arrow.style.display = "none"
+                }
             }
         }
         taskDivAll[i].onmouseleave = function () {
@@ -139,6 +177,7 @@ function clearCompleted() {
     }
     if (itemLeftCounter === 0) {
         document.querySelector("#infoDiv").style.display = "none"
+        arrow.style.display = "none"
     }
     tasks = tasks.filter(task => task.completed == false);
 }
