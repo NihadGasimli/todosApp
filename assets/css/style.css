@@ -1,0 +1,208 @@
+.glow {
+  font-size: 70px;
+  color: #ffffff;
+  text-align: center;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #eeeeee, 0 0 20px #000000, 0 0 30px #000000, 0 0 40px #000000,
+      0 0 50px #392ebd, 0 0 60px #11547a, 0 0 70px #9554b3;
+  }
+
+  to {
+    text-shadow: 0 0 20px #eeeeee, 0 0 30px #0e18c8, 0 0 40px #07538a, 0 0 50px #2b0465,
+      0 0 60px #0b4cb565, 0 0 70px #2712c7, 0 0 80px #101285;
+  }
+}
+
+body {
+  background-color: cadetblue;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#inputDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+}
+
+#input {
+  width: 600px;
+  height: 60px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 30px;
+  font-style: italic;
+  border-radius: 10px;
+  border: 1px solid gray;
+  box-sizing: border-box;
+  position: relative;
+}
+
+#addBtn {
+  height: 50px;
+  width: 70px;
+  border-radius: 20px;
+  background-color: transparent;
+  font-size: 20px;
+  border: 3px solid black;
+  display: none;
+  font-weight: bold;
+  position: absolute;
+  left: 630px;  
+}
+
+.button-85 {
+  border: none;
+  outline: none;
+  color: rgb(255, 255, 255);
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-85:before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #ff0000,
+    #ff7300,
+    #fffb00,
+    #48ff00,
+    #00ffd5,
+    #002bff,
+    #7a00ff,
+    #ff00c8,
+    #ff0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing-button-85 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-button-85 {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.button-85:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #222;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+.taskDiv {
+  display: flex;
+  width: 600px;
+  height: 60px;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid gray;
+  padding-left: 20px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.radioBtn {
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border-radius: 100%;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 24px;
+  color: rgb(25, 207, 25);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.xBtn {
+  margin-left: auto;
+  margin-right: 10px;
+  font-size: 30px;
+  color: gray;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 100;
+  align-self: center;
+  display: none;
+  cursor: pointer;
+}
+
+.xBtn:hover {
+  color: red;
+}
+
+.textOfTask {
+  font-weight: normal;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 28px;
+  align-self: center;
+}
+
+#infoDiv{
+  display: none;
+  background-color: #fff;
+  height: 30px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 10px;
+  box-sizing: border-box;
+  border: 1px solid gray;
+}
+#infoDiv h1{
+  font-size: 18px;
+}
+
+#buttons{
+  display: flex;
+  gap: 20px;
+}
+
+#buttons p:hover{
+  border: 1px solid red;
+  cursor: pointer;
+}
+
+
+#clearCompletedBtn:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
