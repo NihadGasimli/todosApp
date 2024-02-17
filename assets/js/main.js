@@ -15,7 +15,10 @@ var arrowClick = false;
 
 setInterval(function () {
     itemLeft.innerHTML = `${itemLeftCounter} items left!`
-
+    if (itemLeftCounter === 0 && tasks.length === 0) {
+        document.querySelector("#infoDiv").style.display = "none";
+        arrow.style.display = "none";
+    }
 }, 1)
 
 function activatingAddBtn() {
@@ -150,19 +153,18 @@ function removeTask() {
         taskDivAll[i].onmouseenter = function () {
             xBtnAll[i].style.display = "block"
             xBtnAll[i].onclick = function () {
+                console.log(tasks)
                 if (counter > 0 && itemLeftCounter > 0) {
-                    counter--;
                     if (!tasks[i].completed) {
                         itemLeftCounter--;
                     }
-                }
-                else if (itemLeftCounter === 0) {
-                    document.querySelector("#infoDiv").style.display = "none"
-                    arrow.style.display = "none"
+                    counter--;
                 }
 
-                tasks.splice(i, 1);
                 tasksDiv.removeChild(taskDivAll[i])
+                tasks.splice(i, 1);
+                removeTask()
+                completeActivate()
             }
         }
         taskDivAll[i].onmouseleave = function () {
@@ -177,10 +179,6 @@ function clearCompleted() {
         if (tasks[i].completed === true) {
             tasksDiv.removeChild(taskDivAll[i])
         }
-    }
-    if (itemLeftCounter === 0) {
-        document.querySelector("#infoDiv").style.display = "none"
-        arrow.style.display = "none"
     }
     tasks = tasks.filter(task => task.completed == false);
 }
