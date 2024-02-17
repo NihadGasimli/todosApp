@@ -128,16 +128,16 @@ function completeActivate() {
             if (tasks[i].completed === false) {
                 textOfTaskAll[i].style.textDecoration = "line-through"
                 radioBtnAll[i].innerHTML = "✓"
-                tasks[i].completed = true;
                 if (itemLeftCounter > 0) {
                     itemLeftCounter--;
                 }
+                tasks[i].completed = true;
             }
             else {
                 textOfTaskAll[i].style.textDecoration = "none"
                 radioBtnAll[i].innerHTML = ""
-                tasks[i].completed = false;
                 itemLeftCounter++;
+                tasks[i].completed = false;
             }
         }
     }
@@ -145,21 +145,24 @@ function completeActivate() {
 
 function removeTask() {
     var taskDivAll = document.querySelectorAll(".taskDiv");
-    var xBtnAll = document.querySelectorAll(".xBtn")
+    var xBtnAll = document.querySelectorAll(".xBtn");
     for (let i in taskDivAll) {
         taskDivAll[i].onmouseenter = function () {
             xBtnAll[i].style.display = "block"
             xBtnAll[i].onclick = function () {
-                tasks.splice(i, 1);
-                tasksDiv.removeChild(taskDivAll[i])
                 if (counter > 0 && itemLeftCounter > 0) {
                     counter--;
-                    itemLeftCounter--;
+                    if (!tasks[i].completed) {
+                        itemLeftCounter--;
+                    }
                 }
-                if (itemLeftCounter === 0) {
+                else if (itemLeftCounter === 0) {
                     document.querySelector("#infoDiv").style.display = "none"
                     arrow.style.display = "none"
                 }
+
+                tasks.splice(i, 1);
+                tasksDiv.removeChild(taskDivAll[i])
             }
         }
         taskDivAll[i].onmouseleave = function () {
