@@ -156,14 +156,12 @@ body {
 .taskDiv {
   display: flex;
   width: 600px;
-  height: 60px;
   align-items: center;
   gap: 15px;
   border: 1px solid gray;
   padding-left: 20px;
   box-sizing: border-box;
   background-color: #fff;
-
 }
 
 .radioBtn {
@@ -177,18 +175,20 @@ body {
   color: rgb(25, 207, 25);
   font-weight: bold;
   cursor: pointer;
+  position: absolute;
 }
 
 .xBtn {
   margin-left: auto;
   margin-right: 10px;
-  font-size: 30px;
+  font-size: 28px;
   color: gray;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-weight: 100;
   align-self: center;
   display: none;
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .xBtn:hover {
@@ -200,6 +200,11 @@ body {
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
   font-size: 28px;
   align-self: center;
+  display: flex;
+  position: relative;
+  margin-left: 50px;
+  overflow-x: auto;
+  box-sizing: border-box;
 }
 
 #infoDiv {
