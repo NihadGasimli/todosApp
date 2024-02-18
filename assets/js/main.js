@@ -12,8 +12,44 @@ var arrow = document.querySelector("#arrow")
 var counter = 0;
 var itemLeftCounter = 0;
 var arrowClick = false;
+var permission = true;
+
+window.onload = function () {
+    tasks = []
+    for (let i = 0; i < localStorage.length; i++) {
+        var detector = localStorage.getItem(localStorage.key(i));
+        createNewTask(localStorage.key(i))
+        if (detector == "false") {
+            detector = false;
+        } else {
+            detector = true;
+            itemLeftCounter--;
+        }
+
+        var task = {
+            text: localStorage.key(i),
+            completed: detector
+        }
+        tasks.push(task)
+
+        var textOfTaskAll = document.querySelectorAll(".textOfTask");
+        var radioBtnAll = document.querySelectorAll(".radioBtn");
+
+        if (tasks[i].completed === false) {
+            textOfTaskAll[i].style.textDecoration = "none"
+            radioBtnAll[i].innerHTML = ""
+        }
+        else {
+            textOfTaskAll[i].style.textDecoration = "line-through"
+            radioBtnAll[i].innerHTML = "✓";
+        }
+    }
+
+}
+
 
 setInterval(function () {
+    document.querySelector("#infoDiv").style.display = "flex";
     itemLeft.innerHTML = `${itemLeftCounter} items left!`
     if (itemLeftCounter === 0 && tasks.length === 0) {
         document.querySelector("#infoDiv").style.display = "none";
@@ -35,16 +71,46 @@ setInterval(activatingAddBtn, 5);
 
 addBtn.addEventListener("click", function () {
     document.querySelector("#infoDiv").style.display = "flex"
-    var inpValue = input.value
-    createNewTask(inpValue);
+    var inpValue = input.value;
+
+    for (let i in tasks) {
+        if (inpValue === tasks[i].text) {
+            permission = false;
+        }
+    }
+
+    if (permission) {
+        createNewTask(inpValue);
+        addToArray(inpValue)
+    }
+    else {
+        alert("This task also added !")
+        permission = true;
+    }
+
     input.value = ""
 })
 
 window.addEventListener("keyup", function (e) {
     if (e.key === "Enter" && input.value.trim() !== "") {
         document.querySelector("#infoDiv").style.display = "flex"
-        var inpValue = input.value
-        createNewTask(inpValue);
+        var inpValue = input.value;
+
+        for (let i in tasks) {
+            if (inpValue === tasks[i].text) {
+                permission = false;
+            }
+        }
+
+        if (permission) {
+            createNewTask(inpValue);
+            addToArray(inpValue)
+        }
+        else {
+            alert("This task also added !")
+            permission = true;
+        }
+
         input.value = ""
     }
     else if (e.key === "Enter" && input.value.trim() === "") {
@@ -74,9 +140,10 @@ arrow.addEventListener("click", function () {
         var taskDivAll = document.querySelectorAll(".taskDiv");
         var radioBtnAll = document.querySelectorAll(".radioBtn");
         var textOfTaskAll = document.querySelectorAll(".textOfTask");
-        for (let i in taskDivAll) {
+        for (let i = 0; i < taskDivAll.length; i++) {
             arrowClick = true;
             tasks[i].completed = true;
+            writeToLS(tasks[i].text, tasks[i].completed)
             textOfTaskAll[i].style.textDecoration = "line-through";
             radioBtnAll[i].innerHTML = "✓";
             itemLeftCounter = 0;
@@ -86,9 +153,10 @@ arrow.addEventListener("click", function () {
         var taskDivAll = document.querySelectorAll(".taskDiv");
         var radioBtnAll = document.querySelectorAll(".radioBtn");
         var textOfTaskAll = document.querySelectorAll(".textOfTask");
-        for (let i in taskDivAll) {
+        for (let i = 0; i < taskDivAll.length; i++) {
             arrowClick = false;
             tasks[i].completed = false;
+            writeToLS(tasks[i].text, tasks[i].completed)
             textOfTaskAll[i].style.textDecoration = "none";
             radioBtnAll[i].innerHTML = "";
             itemLeftCounter++;
@@ -96,16 +164,19 @@ arrow.addEventListener("click", function () {
     }
 })
 
+function addToArray(text) {
+    var x = {
+        text: text,
+        completed: false
+    }
+    tasks.push(x)
+    writeToLS(text, x.completed)
+}
 
 function createNewTask(text) {
     arrow.style.display = "block"
     counter++;
     itemLeftCounter++;
-    const task = {
-        text: text,
-        completed: false
-    }
-    tasks.push(task);
     var h1 = document.createElement("h1");
     h1.classList.add("textOfTask")
     var radioBtn = document.createElement("div");
@@ -123,6 +194,10 @@ function createNewTask(text) {
     completeActivate()
 }
 
+function writeToLS(text, completed) {
+    localStorage.setItem(text, `${completed}`)
+}
+
 function completeActivate() {
     var radioBtnAll = document.querySelectorAll(".radioBtn");
     var textOfTaskAll = document.querySelectorAll(".textOfTask")
@@ -130,17 +205,19 @@ function completeActivate() {
         radioBtnAll[i].onclick = function () {
             if (tasks[i].completed === false) {
                 textOfTaskAll[i].style.textDecoration = "line-through"
-                radioBtnAll[i].innerHTML = "✓"
+                radioBtnAll[i].innerHTML = "✓";
                 if (itemLeftCounter > 0) {
                     itemLeftCounter--;
                 }
                 tasks[i].completed = true;
+                writeToLS(tasks[i].text, tasks[i].completed)
             }
             else {
                 textOfTaskAll[i].style.textDecoration = "none"
                 radioBtnAll[i].innerHTML = ""
                 itemLeftCounter++;
                 tasks[i].completed = false;
+                writeToLS(tasks[i].text, tasks[i].completed)
             }
         }
     }
@@ -153,7 +230,6 @@ function removeTask() {
         taskDivAll[i].onmouseenter = function () {
             xBtnAll[i].style.display = "block"
             xBtnAll[i].onclick = function () {
-                console.log(tasks)
                 if (counter > 0 && itemLeftCounter > 0) {
                     if (!tasks[i].completed) {
                         itemLeftCounter--;
@@ -162,6 +238,7 @@ function removeTask() {
                 }
 
                 tasksDiv.removeChild(taskDivAll[i])
+                localStorage.removeItem(`${tasks[i].text}`);
                 tasks.splice(i, 1);
                 removeTask()
                 completeActivate()
@@ -178,6 +255,7 @@ function clearCompleted() {
     for (let i in tasks) {
         if (tasks[i].completed === true) {
             tasksDiv.removeChild(taskDivAll[i])
+            localStorage.removeItem(`${tasks[i].text}`);
         }
     }
     tasks = tasks.filter(task => task.completed == false);
@@ -216,4 +294,7 @@ function showCompletedTasks() {
     var completedTasks = tasks.filter(task => task.completed == false);
 
 }
+
+
+
 
