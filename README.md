@@ -1,4 +1,4 @@
-TODOsApp is a simple task management web application created using HTML, CSS, and JavaScript.
+*TODOsApp is a simple task management web application created using HTML, CSS, and JavaScript.*
 
 Usage
 Add a new task:
