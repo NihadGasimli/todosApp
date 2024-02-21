@@ -1,6 +1,6 @@
 *TODOsApp is a simple task management web application created using HTML, CSS, and JavaScript.*
 
-_Usage_
+_Usage_ <br>
 1.Add a new task:
 Click on the "Add Task" button.
 Enter the task details and click "Add".
